@@ -1,0 +1,28 @@
+version: '3.0'
+
+services:
+  postgres:
+    restart: always
+    image: "postgres:16"
+    ports:
+    - "5432"
+    environment:
+      POSTGRES_DB: thingsboard
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./tb-node/postgres:/var/lib/postgresql/data
+  tb-core:
+    env_file:
+      - tb-node.postgres.env
+    depends_on:
+      - postgres
+  tb-rule-engine:
+    env_file:
+      - tb-node.postgres.env
+    depends_on:
+      - postgres
+  tb-rule-engine:
+    env_file:
+      - tb-node.postgres.env
+    depends_on:
+      - postgres
